@@ -43,6 +43,23 @@ export const Colors = {
   },
 };
 
+export const Layout = {
+  radius: {
+    sm: 8,
+    md: 14,
+    lg: 20,
+    xl: 24,
+  },
+  spacing: {
+    xs: 4,
+    sm: 8,
+    md: 12,
+    lg: 16,
+    xl: 20,
+    xxl: 24,
+  },
+};
+
 export const SagaColors: Record<string, string> = {
   'Star Wars': '#FFE81F',
   'LOTR': '#2E7D32',

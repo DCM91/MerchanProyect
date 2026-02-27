@@ -3,7 +3,7 @@ import { ProductCard } from '@/components/ProductCard';
 import { SectionHeader } from '@/components/SectionHeader';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { CATEGORIES, PRODUCTS, PROMO_BANNER } from '@/constants/mock-data';
+import { CATEGORIES, Category, PRODUCTS, PROMO_BANNER, Product } from '@/constants/mock-data';
 import { useThemeColor } from '@/hooks/use-theme-color';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
@@ -31,11 +31,11 @@ export default function HomeScreen() {
   const [showSuggestions, setShowSuggestions] = useState(false);
 
   const filteredProducts = selectedCategory
-    ? PRODUCTS.filter(p => p.saga === selectedCategory)
-    : PRODUCTS.filter(p => p.featured);
+    ? PRODUCTS.filter((p: Product) => p.saga === selectedCategory)
+    : PRODUCTS.filter((p: Product) => p.featured);
 
   const suggestions = searchQuery.trim().length > 0
-    ? PRODUCTS.filter(p =>
+    ? PRODUCTS.filter((p: Product) =>
       p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       p.saga.toLowerCase().includes(searchQuery.toLowerCase())
     ).slice(0, 5)
@@ -114,7 +114,7 @@ export default function HomeScreen() {
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.categoriesList}>
-          {CATEGORIES.map((cat) => (
+          {CATEGORIES.map((cat: Category) => (
             <CategoryBadge
               key={cat.id}
               category={cat}
@@ -132,7 +132,7 @@ export default function HomeScreen() {
           onActionPress={navigateToCatalog}
         />
         <View style={styles.productsGrid}>
-          {filteredProducts.map((product) => (
+          {filteredProducts.map((product: Product) => (
             <ProductCard key={product.id} product={product} />
           ))}
           {filteredProducts.length === 0 && (

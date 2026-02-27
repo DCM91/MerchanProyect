@@ -6,6 +6,7 @@ import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
+import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 
 type Props = {
     product: Product;
@@ -17,43 +18,51 @@ export function ProductCard({ product }: Props) {
     const cardBorder = useThemeColor({}, 'cardBorder');
     const accent = useThemeColor({}, 'accent');
 
-    // Color de la saga para el badge
     const sagaColor = SagaColors[product.saga as keyof typeof SagaColors] || accent;
 
-    return (
-        <Pressable
-            onPress={() => router.push(`/product/${product.id}` as any)}
-            style={({ pressed }) => [
-                styles.card,
-                { backgroundColor: cardBg, borderColor: cardBorder },
-                pressed && { transform: [{ scale: 0.98 }] }
-            ]}
-        >
-            <View style={styles.imageContainer}>
-                {product.image ? (
-                    <Image
-                        source={product.image}
-                        style={styles.productImage}
-                        contentFit="cover"
-                        transition={500}
-                    />
-                ) : (
-                    <ThemedText style={styles.emoji}>{product.emoji}</ThemedText>
-                )}
-                <View style={[styles.sagaBadge, { backgroundColor: sagaColor }]}>
-                    <ThemedText style={styles.sagaText}>{product.saga}</ThemedText>
-                </View>
-            </View>
+    const scale = useSharedValue(1);
 
-            <View style={styles.content}>
-                <ThemedText type="defaultSemiBold" numberOfLines={1} style={styles.name}>
-                    {product.name}
-                </ThemedText>
-                <ThemedText type="defaultSemiBold" style={[styles.price, { color: accent }]}>
-                    {product.price.toFixed(2)}€
-                </ThemedText>
-            </View>
-        </Pressable>
+    const animatedStyle = useAnimatedStyle(() => ({
+        transform: [{ scale: scale.value }],
+    }));
+
+    return (
+        <Animated.View style={[
+            styles.card,
+            { backgroundColor: cardBg, borderColor: cardBorder },
+            animatedStyle,
+        ]}>
+            <Pressable
+                onPress={() => router.push(`/product/${product.id}` as any)}
+                onPressIn={() => scale.value = withSpring(0.96)}
+                onPressOut={() => scale.value = withSpring(1)}
+            >
+                <View style={styles.imageContainer}>
+                    {product.image ? (
+                        <Image
+                            source={product.image}
+                            style={styles.productImage}
+                            contentFit="cover"
+                            transition={500}
+                        />
+                    ) : (
+                        <ThemedText style={styles.emoji}>{product.emoji}</ThemedText>
+                    )}
+                    <View style={[styles.sagaBadge, { backgroundColor: sagaColor }]}>
+                        <ThemedText style={styles.sagaText}>{product.saga}</ThemedText>
+                    </View>
+                </View>
+
+                <View style={styles.content}>
+                    <ThemedText type="defaultSemiBold" numberOfLines={1} style={styles.name}>
+                        {product.name}
+                    </ThemedText>
+                    <ThemedText type="defaultSemiBold" style={[styles.price, { color: accent }]}>
+                        {product.price.toFixed(2)}€
+                    </ThemedText>
+                </View>
+            </Pressable>
+        </Animated.View>
     );
 }
 

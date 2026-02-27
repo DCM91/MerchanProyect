@@ -2,6 +2,7 @@ import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { useCart } from '@/context/CartContext';
 import { useThemeColor } from '@/hooks/use-theme-color';
+import * as Haptics from 'expo-haptics';
 import { Image } from 'expo-image';
 import { Stack, useRouter } from 'expo-router';
 import React from 'react';
@@ -32,20 +33,32 @@ export default function CartScreen() {
 
                 <View style={styles.quantityControls}>
                     <Pressable
-                        onPress={() => updateQuantity(item.id, item.quantity - 1)}
+                        onPress={() => {
+                            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                            updateQuantity(item.id, item.quantity - 1);
+                        }}
                         style={[styles.qtyBtn, { borderColor: cardBorder }]}
                     >
                         <ThemedText>-</ThemedText>
                     </Pressable>
                     <ThemedText style={styles.qtyText}>{item.quantity}</ThemedText>
                     <Pressable
-                        onPress={() => updateQuantity(item.id, item.quantity + 1)}
+                        onPress={() => {
+                            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                            updateQuantity(item.id, item.quantity + 1);
+                        }}
                         style={[styles.qtyBtn, { borderColor: cardBorder }]}
                     >
                         <ThemedText>+</ThemedText>
                     </Pressable>
 
-                    <Pressable onPress={() => removeFromCart(item.id)} style={styles.removeBtn}>
+                    <Pressable
+                        onPress={() => {
+                            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                            removeFromCart(item.id);
+                        }}
+                        style={styles.removeBtn}
+                    >
                         <ThemedText style={styles.removeIcon}>🗑️</ThemedText>
                     </Pressable>
                 </View>
@@ -94,10 +107,13 @@ export default function CartScreen() {
                         </View>
 
                         <Pressable
-                            onPress={() => router.push('/checkout')}
+                            onPress={() => {
+                                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                                router.push('/checkout');
+                            }}
                             style={[styles.checkoutBtn, { backgroundColor: accent }]}
                         >
-                            <ThemedText style={styles.checkoutText}>Finalizar Pedido ⚔️</ThemedText>
+                            <ThemedText style={styles.checkoutText}>Finalizar Pedido</ThemedText>
                         </Pressable>
                     </View>
                 </>

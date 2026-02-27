@@ -4,6 +4,7 @@ import { PRODUCTS } from '@/constants/mock-data';
 import { SagaColors } from '@/constants/theme';
 import { useCart } from '@/context/CartContext';
 import { useThemeColor } from '@/hooks/use-theme-color';
+import * as Haptics from 'expo-haptics';
 import { Image } from 'expo-image';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import React from 'react';
@@ -74,14 +75,20 @@ export default function ProductDetailScreen() {
                         <ThemedText type="defaultSemiBold">Cantidad</ThemedText>
                         <View style={styles.quantityControls}>
                             <Pressable
-                                onPress={() => setQuantity(Math.max(1, quantity - 1))}
+                                onPress={() => {
+                                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                                    setQuantity(Math.max(1, quantity - 1));
+                                }}
                                 style={[styles.qtyBtn, { borderColor: cardBorder }]}
                             >
                                 <ThemedText style={styles.qtyBtnText}>-</ThemedText>
                             </Pressable>
                             <ThemedText style={styles.qtyLabel}>{quantity}</ThemedText>
                             <Pressable
-                                onPress={() => setQuantity(quantity + 1)}
+                                onPress={() => {
+                                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                                    setQuantity(quantity + 1);
+                                }}
                                 style={[styles.qtyBtn, { borderColor: cardBorder }]}
                             >
                                 <ThemedText style={styles.qtyBtnText}>+</ThemedText>
@@ -97,6 +104,7 @@ export default function ProductDetailScreen() {
                 <Pressable
                     style={[styles.buyButton, { backgroundColor: accent }]}
                     onPress={() => {
+                        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
                         addToCart(product, quantity);
                         router.push('/cart');
                     }}
