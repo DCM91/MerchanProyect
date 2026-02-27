@@ -1,50 +1,91 @@
-# Welcome to your Expo app 👋
+# ⚔️ MerchanSagas
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+**Marketplace de merchandising de sagas míticas.**
 
-## Get started
+Encuentra réplicas, coleccionables y productos oficiales de tus sagas favoritas: Star Wars, El Señor de los Anillos, Harry Potter, Dragon Ball, Marvel y más.
 
-1. Install dependencies
+## 📱 Screenshots
 
-   ```bash
-   npm install
-   ```
+> *Próximamente*
 
-2. Start the app
+## 🚀 Tech Stack
 
-   ```bash
-   npx expo start
-   ```
+- **[Expo](https://expo.dev)** — SDK 54, framework cross-platform
+- **[React Native](https://reactnative.dev)** — v0.81
+- **[Expo Router](https://docs.expo.dev/router/introduction/)** — Navegación basada en archivos
+- **[TypeScript](https://www.typescriptlang.org/)** — Tipado estático
+- **[React Native Reanimated](https://docs.swmansion.com/react-native-reanimated/)** — Animaciones fluidas
 
-In the output, you'll find options to open the app in a
+## 📂 Estructura del proyecto
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+MerchanProyect/
+├── app/                    # Pantallas y navegación (Expo Router)
+│   ├── (tabs)/             # Navegación por tabs
+│   │   ├── index.tsx       # Home - Landing del marketplace
+│   │   ├── explore.tsx     # Catálogo - Productos por saga
+│   │   └── _layout.tsx     # Configuración de tabs
+│   ├── _layout.tsx         # Layout raíz
+│   └── modal.tsx           # Modal
+├── components/             # Componentes reutilizables
+│   ├── ProductCard.tsx     # Card de producto
+│   ├── CategoryBadge.tsx   # Badge de categoría/saga
+│   ├── SectionHeader.tsx   # Header de sección
+│   └── ...                 # Componentes del template
+├── constants/              # Constantes y configuración
+│   ├── theme.ts            # Paleta de colores y tipografía
+│   └── mock-data.ts        # Datos de prueba (productos, categorías)
+├── hooks/                  # Custom hooks
+├── assets/                 # Imágenes y fuentes
+└── package.json
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 🛠️ Instalación
 
-## Learn more
+### Requisitos previos
+- **Node.js** ≥ 20.x
+- **npm** ≥ 10.x
+- **Expo Go** app en tu móvil ([Android](https://play.google.com/store/apps/details?id=host.exp.exponent) / [iOS](https://apps.apple.com/app/expo-go/id982107779))
 
-To learn more about developing your project with Expo, look at the following resources:
+### Pasos
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+# Clonar el repositorio
+git clone https://github.com/tu-usuario/MerchanProyect.git
+cd MerchanProyect
 
-## Join the community
+# Instalar dependencias
+npm install
 
-Join our community of developers creating universal apps.
+# Iniciar el servidor de desarrollo
+npx expo start
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Escanea el código QR con **Expo Go** o pulsa `w` para abrir en el navegador.
+
+## 📋 Roadmap
+
+- [x] **Fase 1**: Diseño UI inicial con datos mock
+- [ ] **Fase 2**: Navegación avanzada y detalle de producto
+- [ ] **Fase 3**: Integración con backend / API
+- [ ] **Fase 4**: Carrito de compras y checkout
+- [ ] **Fase 5**: Autenticación de usuarios
+- [ ] **Fase 6**: Despliegue y publicación
+
+## 🤝 Contribuir
+
+Este proyecto está en desarrollo activo. Si quieres contribuir:
+
+1. Haz fork del repositorio
+2. Crea una rama (`git checkout -b feature/nueva-funcionalidad`)
+3. Haz commit de tus cambios (`git commit -m 'feat: nueva funcionalidad'`)
+4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
+5. Abre un Pull Request
+
+## 📄 Licencia
+
+Este proyecto es privado. Todos los derechos reservados.
+
+---
+
+*Hecho con ❤️ y Expo*

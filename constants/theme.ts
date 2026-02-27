@@ -1,30 +1,57 @@
 /**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
+ * MerchanSagas Theme
+ * Paleta épica para marketplace de merchandising de sagas míticas.
  */
 
 import { Platform } from 'react-native';
 
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
+const tintColorLight = '#2D1B69';
+const tintColorDark = '#D4A843';
 
 export const Colors = {
   light: {
-    text: '#11181C',
-    background: '#fff',
+    text: '#1A1A2E',
+    background: '#FAF6F0',
     tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
+    icon: '#6B5B8A',
+    tabIconDefault: '#9B8FB0',
     tabIconSelected: tintColorLight,
+    card: '#FFFFFF',
+    cardBorder: '#E8E0D4',
+    searchBg: '#F0EBE3',
+    accent: '#D4A843',
+    accentSecondary: '#2D1B69',
+    subtleText: '#7A7585',
+    promo: '#1A1A2E',
+    promoText: '#FAF6F0',
   },
   dark: {
     text: '#ECEDEE',
-    background: '#151718',
+    background: '#0B0D17',
     tint: tintColorDark,
     icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
+    tabIconDefault: '#5A5F65',
     tabIconSelected: tintColorDark,
+    card: '#141827',
+    cardBorder: '#1E2235',
+    searchBg: '#141827',
+    accent: '#D4A843',
+    accentSecondary: '#8B6FD4',
+    subtleText: '#7A7D85',
+    promo: '#1A1132',
+    promoText: '#FAF6F0',
   },
+};
+
+export const SagaColors: Record<string, string> = {
+  'Star Wars': '#FFE81F',
+  'LOTR': '#2E7D32',
+  'Harry Potter': '#7B1FA2',
+  'Dragon Ball': '#FF6F00',
+  'Marvel': '#D32F2F',
+  'DC Comics': '#1565C0',
+  'Pokémon': '#FBC02D',
+  'Naruto': '#E65100',
 };
 
 export const Fonts = Platform.select({
