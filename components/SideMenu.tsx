@@ -37,14 +37,19 @@ export function SideMenu({ isOpen, onClose }: Props) {
                     </View>
 
                     <View style={styles.links}>
-                        <Pressable style={styles.link} onPress={() => navigate('/(tabs)/')}>
+                        <Pressable style={styles.link} onPress={() => navigate('/')}>
                             <ThemedText style={styles.linkEmoji}>🏠</ThemedText>
                             <ThemedText type="defaultSemiBold">Home</ThemedText>
                         </Pressable>
 
-                        <Pressable style={styles.link} onPress={() => navigate('/(tabs)/explore')}>
+                        <Pressable style={styles.link} onPress={() => navigate('/explore')}>
                             <ThemedText style={styles.linkEmoji}>📦</ThemedText>
                             <ThemedText type="defaultSemiBold">Catálogo</ThemedText>
+                        </Pressable>
+
+                        <Pressable style={styles.link} onPress={() => navigate('/contact')}>
+                            <ThemedText style={styles.linkEmoji}>✉️</ThemedText>
+                            <ThemedText type="defaultSemiBold">Contacto</ThemedText>
                         </Pressable>
                     </View>
 

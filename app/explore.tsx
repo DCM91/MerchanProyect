@@ -19,11 +19,9 @@ export default function ExploreScreen() {
 
       {productsBySaga.map((group) => (
         <View key={group.saga.id}>
-          <View style={styles.section}>
-            <SectionHeader
-              title={`${group.saga.emoji} ${group.saga.name}`}
-            />
-          </View>
+          <SectionHeader
+            title={`${group.saga.emoji} ${group.saga.name}`}
+          />
           <View style={styles.productsGrid}>
             {group.products.map((product) => (
               <ProductCard key={product.id} product={product} />

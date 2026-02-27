@@ -31,7 +31,7 @@ export default function HomeScreen() {
     ? PRODUCTS.filter(p => p.saga === selectedCategory)
     : PRODUCTS.filter(p => p.featured);
 
-  const navigateToCatalog = () => router.push('/(tabs)/explore');
+  const navigateToCatalog = () => router.push('/explore');
 
   return (
     <ThemedView style={styles.container}>
