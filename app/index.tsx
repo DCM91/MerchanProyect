@@ -24,28 +24,76 @@ export default function HomeScreen() {
   const promoBg = useThemeColor({}, 'promo');
   const promoText = useThemeColor({}, 'promoText');
   const cardBorder = useThemeColor({}, 'cardBorder');
+  const cardBg = useThemeColor({}, 'card');
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   const filteredProducts = selectedCategory
     ? PRODUCTS.filter(p => p.saga === selectedCategory)
     : PRODUCTS.filter(p => p.featured);
 
+  const suggestions = searchQuery.trim().length > 0
+    ? PRODUCTS.filter(p =>
+      p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.saga.toLowerCase().includes(searchQuery.toLowerCase())
+    ).slice(0, 5)
+    : [];
+
   const navigateToCatalog = () => router.push('/explore');
+
+  const handleSelectSuggestion = (id: string) => {
+    setSearchQuery('');
+    setShowSuggestions(false);
+    router.push(`/product/${id}`);
+  };
 
   return (
     <ThemedView style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+        contentContainerStyle={{ flexGrow: 1 }}
+      >
         <View style={styles.topSpacer} />
 
-        {/* Search Bar */}
-        <View style={[styles.searchContainer, { backgroundColor: searchBg }]}>
-          <ThemedText style={styles.searchIcon}>🔍</ThemedText>
-          <TextInput
-            placeholder="Buscar productos, sagas..."
-            placeholderTextColor={subtleText}
-            style={[styles.searchInput, { color: textColor }]}
-          />
+        {/* Search Bar & Autocomplete */}
+        <View style={styles.searchWrapper}>
+          <View style={[styles.searchContainer, { backgroundColor: searchBg }]}>
+            <TextInput
+              placeholder="Buscar productos, sagas..."
+              placeholderTextColor={subtleText}
+              style={[styles.searchInput, { color: textColor }]}
+              value={searchQuery}
+              onChangeText={(text) => {
+                setSearchQuery(text);
+                setShowSuggestions(text.length > 0);
+              }}
+              onFocus={() => setShowSuggestions(searchQuery.length > 0)}
+            />
+          </View>
+
+          {showSuggestions && suggestions.length > 0 && (
+            <View style={[styles.suggestionsList, { backgroundColor: cardBg, borderColor: cardBorder }]}>
+              {suggestions.map((item) => (
+                <Pressable
+                  key={item.id}
+                  style={({ pressed }) => [
+                    styles.suggestionItem,
+                    { borderBottomColor: cardBorder, opacity: pressed ? 0.7 : 1 }
+                  ]}
+                  onPress={() => handleSelectSuggestion(item.id)}
+                >
+                  <View>
+                    <ThemedText style={styles.suggestionName}>{item.name}</ThemedText>
+                    <ThemedText style={styles.suggestionSaga}>{item.saga}</ThemedText>
+                  </View>
+                  <ThemedText style={[styles.suggestionPrice, { color: accent }]}>{item.price.toFixed(2)}€</ThemedText>
+                </Pressable>
+              ))}
+            </View>
+          )}
         </View>
 
         {/* Promo Banner */}
@@ -58,7 +106,6 @@ export default function HomeScreen() {
               {PROMO_BANNER.subtitle}
             </ThemedText>
           </View>
-          <ThemedText style={styles.promoEmoji}>{PROMO_BANNER.emoji}</ThemedText>
         </Pressable>
 
         {/* Categories */}
@@ -81,7 +128,7 @@ export default function HomeScreen() {
 
         {/* Featured / Filtered Products */}
         <SectionHeader
-          title={selectedCategory ? `Viendo ${selectedCategory}` : "⭐ Destacados"}
+          title={selectedCategory ? `Viendo ${selectedCategory}` : "Destacados"}
           onActionPress={navigateToCatalog}
         />
         <View style={styles.productsGrid}>
@@ -106,6 +153,10 @@ const styles = StyleSheet.create({
   topSpacer: {
     height: 10,
   },
+  searchWrapper: {
+    zIndex: 100,
+    position: 'relative',
+  },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -115,14 +166,45 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 12,
   },
-  searchIcon: {
-    fontSize: 16,
-    marginRight: 8,
-  },
   searchInput: {
     flex: 1,
     fontSize: 15,
     padding: 0,
+  },
+  suggestionsList: {
+    position: 'absolute',
+    top: 68,
+    left: 20,
+    right: 20,
+    borderRadius: 16,
+    borderWidth: 1,
+    padding: 8,
+    zIndex: 1000,
+    elevation: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+  },
+  suggestionItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 12,
+    borderBottomWidth: 1,
+  },
+  suggestionName: {
+    fontSize: 15,
+    fontWeight: '600',
+  },
+  suggestionSaga: {
+    fontSize: 12,
+    opacity: 0.5,
+    marginTop: 2,
+  },
+  suggestionPrice: {
+    fontSize: 14,
+    fontWeight: '700',
   },
   promoBanner: {
     flexDirection: 'row',
@@ -131,13 +213,10 @@ const styles = StyleSheet.create({
     marginTop: 20,
     borderRadius: 16,
     padding: 20,
+    zIndex: 1,
   },
   promoContent: {
     flex: 1,
-  },
-  promoEmoji: {
-    fontSize: 48,
-    marginLeft: 12,
   },
   categoriesList: {
     paddingHorizontal: 20,
@@ -159,3 +238,5 @@ const styles = StyleSheet.create({
     height: 40,
   },
 });
+
+

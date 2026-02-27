@@ -1,5 +1,7 @@
 import { ThemedText } from '@/components/themed-text';
+import { useCart } from '@/context/CartContext';
 import { useThemeColor } from '@/hooks/use-theme-color';
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
@@ -8,6 +10,8 @@ type Props = {
 };
 
 export function CustomHeader({ onMenuPress }: Props) {
+    const router = useRouter();
+    const { totalItems } = useCart();
     const bg = useThemeColor({}, 'card');
     const border = useThemeColor({}, 'cardBorder');
     const accent = useThemeColor({}, 'accent');
@@ -18,12 +22,21 @@ export function CustomHeader({ onMenuPress }: Props) {
                 <ThemedText style={styles.icon}>☰</ThemedText>
             </Pressable>
 
-            <ThemedText type="defaultSemiBold" style={[styles.logo, { color: accent }]}>
-                ⚔️ MerchanSagas
-            </ThemedText>
+            <Pressable onPress={() => router.push('/')}>
+                <ThemedText type="defaultSemiBold" style={[styles.logo, { color: accent }]}>
+                    MerchanSagas
+                </ThemedText>
+            </Pressable>
 
-            <Pressable style={styles.iconButton}>
-                <ThemedText style={styles.icon}>🛒</ThemedText>
+            <Pressable onPress={() => router.push('/cart')} style={styles.iconButton}>
+                <View style={styles.cartContainer}>
+                    <ThemedText style={styles.icon}>🛒</ThemedText>
+                    {totalItems > 0 && (
+                        <View style={[styles.badge, { backgroundColor: accent }]}>
+                            <ThemedText style={styles.badgeText}>{totalItems}</ThemedText>
+                        </View>
+                    )}
+                </View>
             </Pressable>
         </View>
     );
@@ -49,5 +62,26 @@ const styles = StyleSheet.create({
     logo: {
         fontSize: 20,
         fontWeight: '900',
+    },
+    cartContainer: {
+        position: 'relative',
+    },
+    badge: {
+        position: 'absolute',
+        top: -6,
+        right: -6,
+        minWidth: 18,
+        height: 18,
+        borderRadius: 9,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 2,
+    },
+    badgeText: {
+        color: '#000',
+        fontSize: 10,
+        fontWeight: '900',
+        textAlign: 'center',
+        lineHeight: 12,
     },
 });

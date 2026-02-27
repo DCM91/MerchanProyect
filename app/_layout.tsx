@@ -7,6 +7,7 @@ import 'react-native-reanimated';
 
 import { CustomHeader } from '@/components/CustomHeader';
 import { SideMenu } from '@/components/SideMenu';
+import { CartProvider } from '@/context/CartContext';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
 export const unstable_settings = {
@@ -18,20 +19,22 @@ export default function RootLayout() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <View style={styles.container}>
-        <CustomHeader onMenuPress={() => setIsMenuOpen(true)} />
-        <SideMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+    <CartProvider>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <View style={styles.container}>
+          <CustomHeader onMenuPress={() => setIsMenuOpen(true)} />
+          <SideMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="index" />
-          <Stack.Screen name="explore" />
-          <Stack.Screen name="contact" options={{ presentation: 'modal' }} />
-          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-        </Stack>
-        <StatusBar style="auto" />
-      </View>
-    </ThemeProvider>
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="index" />
+            <Stack.Screen name="explore" />
+            <Stack.Screen name="contact" options={{ presentation: 'modal' }} />
+            <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+          </Stack>
+          <StatusBar style="auto" />
+        </View>
+      </ThemeProvider>
+    </CartProvider>
   );
 }
 
