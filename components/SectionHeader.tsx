@@ -1,5 +1,6 @@
+import { ThemedText } from '@/components/themed-text';
 import { useThemeColor } from '@/hooks/use-theme-color';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 
 type Props = {
     title: string;
@@ -8,15 +9,14 @@ type Props = {
 };
 
 export function SectionHeader({ title, actionText = 'Ver todo', onActionPress }: Props) {
-    const textColor = useThemeColor({}, 'text');
     const accent = useThemeColor({}, 'accent');
 
     return (
         <View style={styles.container}>
-            <Text style={[styles.title, { color: textColor }]}>{title}</Text>
+            <ThemedText type="subtitle" style={styles.title}>{title}</ThemedText>
             {onActionPress && (
                 <Pressable onPress={onActionPress}>
-                    <Text style={[styles.action, { color: accent }]}>{actionText}</Text>
+                    <ThemedText style={[styles.action, { color: accent }]}>{actionText}</ThemedText>
                 </Pressable>
             )}
         </View>

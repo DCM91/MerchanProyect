@@ -1,7 +1,8 @@
+import { ThemedText } from '@/components/themed-text';
 import type { Product } from '@/constants/mock-data';
 import { SagaColors } from '@/constants/theme';
 import { useThemeColor } from '@/hooks/use-theme-color';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 
 type Props = {
     product: Product;
@@ -11,8 +12,6 @@ type Props = {
 export function ProductCard({ product, onPress }: Props) {
     const cardBg = useThemeColor({}, 'card');
     const cardBorder = useThemeColor({}, 'cardBorder');
-    const textColor = useThemeColor({}, 'text');
-    const subtleText = useThemeColor({}, 'subtleText');
     const accent = useThemeColor({}, 'accent');
     const sagaColor = SagaColors[product.saga] ?? '#888';
 
@@ -24,21 +23,20 @@ export function ProductCard({ product, onPress }: Props) {
                 {
                     backgroundColor: cardBg,
                     borderColor: cardBorder,
-                    opacity: pressed ? 0.85 : 1,
-                    transform: [{ scale: pressed ? 0.97 : 1 }],
+                    transform: [{ scale: pressed ? 0.98 : 1 }],
                 },
             ]}>
             <View style={styles.emojiContainer}>
-                <Text style={styles.emoji}>{product.emoji}</Text>
+                <ThemedText style={styles.emoji}>{product.emoji}</ThemedText>
             </View>
             <View style={styles.info}>
-                <Text style={[styles.name, { color: textColor }]} numberOfLines={2}>
+                <ThemedText type="defaultSemiBold" style={styles.name} numberOfLines={2}>
                     {product.name}
-                </Text>
+                </ThemedText>
                 <View style={[styles.sagaBadge, { backgroundColor: sagaColor + '20' }]}>
-                    <Text style={[styles.sagaText, { color: sagaColor }]}>{product.saga}</Text>
+                    <ThemedText style={[styles.sagaText, { color: sagaColor }]}>{product.saga}</ThemedText>
                 </View>
-                <Text style={[styles.price, { color: accent }]}>€{product.price.toFixed(2)}</Text>
+                <ThemedText style={[styles.price, { color: accent }]}>€{product.price.toFixed(2)}</ThemedText>
             </View>
         </Pressable>
     );

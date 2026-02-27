@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerSpacer: {
-    height: 60,
+    height: 10,
   },
   section: {
     paddingHorizontal: 16,

@@ -1,3 +1,4 @@
+import { ThemedText } from '@/components/themed-text';
 import type { Category } from '@/constants/mock-data';
 import { SagaColors } from '@/constants/theme';
 import { useThemeColor } from '@/hooks/use-theme-color';
@@ -13,7 +14,6 @@ export function CategoryBadge({ category, isSelected, onPress }: Props) {
     const cardBg = useThemeColor({}, 'card');
     const cardBorder = useThemeColor({}, 'cardBorder');
     const textColor = useThemeColor({}, 'text');
-    const accent = useThemeColor({}, 'accent');
     const sagaColor = SagaColors[category.name] ?? '#888';
 
     return (
@@ -28,14 +28,15 @@ export function CategoryBadge({ category, isSelected, onPress }: Props) {
                 },
             ]}>
             <Text style={styles.emoji}>{category.emoji}</Text>
-            <Text
+            <ThemedText
+                type="defaultSemiBold"
                 style={[
                     styles.text,
                     { color: isSelected ? sagaColor : textColor },
                 ]}
                 numberOfLines={1}>
                 {category.name}
-            </Text>
+            </ThemedText>
         </Pressable>
     );
 }
